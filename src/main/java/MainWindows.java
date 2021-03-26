@@ -221,5 +221,11 @@ public class MainWindows {
 		row[2] = "89";
 		row[3] = "Roman SF";
 		model.addRow(row);
+		
+		row[0] = "5";
+		row[1] = "PQ";
+		row[2] = "5";
+		row[3] = "C'est du triple";
+		model.addRow(row);
 	}
 }
