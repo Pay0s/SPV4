@@ -55,6 +55,36 @@ public class JBDC {
 		
 	}
 	
+	public static void updateArticle(int ID, String Nom, int Qte, String Description) throws SQLException {
+		Connection con = Connex();
+		//java.sql.Statement statement =  con.createStatement();
+		PreparedStatement pps = con.prepareStatement("UPDATE articles SET Nom = ?, Qte = ?, Description = ? WHERE id = ?");
+		
+		pps.setInt(4, ID);
+		pps.setString(1, Nom);
+		pps.setInt(2, Qte);
+		pps.setString(3, Description);
+		
+		pps.executeUpdate(); 
+		//paul
+		//PreparedStatement pps = con.execute("INSERT INTO `articles` (`ID`, `Nom`, `Qte`, `Description`) VALUES (NULL, Nom , Qte, Description)");
+		
+		
+		
+	}
+	
+	public static void deleteArticle(int ID) throws SQLException {
+		Connection con = Connex();
+		//java.sql.Statement statement =  con.createStatement();
+		PreparedStatement pps = con.prepareStatement("DELETE from articles WHERE id = ?");
+		
+		pps.setInt(1, ID);
+		pps.executeUpdate(); 
+		//paul
+		//PreparedStatement pps = con.execute("INSERT INTO `articles` (`ID`, `Nom`, `Qte`, `Description`) VALUES (NULL, Nom , Qte, Description)");
+		
+	}
+	
 	
 	
 }

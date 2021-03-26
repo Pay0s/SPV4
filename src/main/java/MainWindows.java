@@ -193,6 +193,18 @@ public class MainWindows extends JBDC{
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				try {
+					int i = table.getSelectedRow();
+					JBDC.updateArticle(Integer.parseInt(model.getValueAt(i, 0).toString()), textFieldNom.getText(), Integer.parseInt(textFieldQte.getText()), textFieldDesc.getText());
+					
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				int i = table.getSelectedRow();
 				model.setValueAt(textFieldID.getText(), i, 0);
 				model.setValueAt(textFieldNom.getText(), i, 1);
@@ -208,7 +220,15 @@ public class MainWindows extends JBDC{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				int i = table.getSelectedRow();
-
+				try {
+					JBDC.deleteArticle(Integer.parseInt(model.getValueAt(i, 0).toString()));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if( i >= 0 ) {
 					
 					model.removeRow(i);
