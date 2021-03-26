@@ -238,7 +238,5 @@ public class MainWindows extends JBDC{
 			e1.printStackTrace();
 		}
 		
-		
-		
 	}
 }

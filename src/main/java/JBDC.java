@@ -48,7 +48,7 @@ public class JBDC {
 		pps.setInt(2, Qte);
 		pps.setString(3, Description);
 		pps.executeUpdate(); 
-		//pa
+		//paul
 		//PreparedStatement pps = con.execute("INSERT INTO `articles` (`ID`, `Nom`, `Qte`, `Description`) VALUES (NULL, Nom , Qte, Description)");
 		
 		
