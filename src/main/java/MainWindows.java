@@ -1,26 +1,27 @@
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class MainWindows {
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import com.mysql.cj.protocol.Resultset;
+
+
+public class MainWindows extends JBDC{
 
 	private JFrame frame1;
 	private JTextField textFieldID;
@@ -29,11 +30,20 @@ public class MainWindows {
 	private JTextField textFieldDesc;
 	private JTable table;
 	DefaultTableModel model;
+	
 
 	/**
 	 * Launch the application.
+	 * @throws SQLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		
+		
+		//while (Articles.next()) {
+			//System.out.println("id:" + Articles.getInt("ID"));
+		//}
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -116,6 +126,11 @@ public class MainWindows {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				
+				
+				
+				
 				int i = table.getSelectedRow();
 				
 				if (i >= 0 ) {
@@ -147,6 +162,16 @@ public class MainWindows {
 					JOptionPane.showMessageDialog(null, "Il faut remplir tout les champs");
 					
 				} else {
+					
+					
+					try {
+						JBDC.addArticle(textFieldNom.getText(), Integer.parseInt(textFieldQte.getText()), textFieldDesc.getText());
+					
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					
 					row[0] = textFieldID.getText();
 					row[1] = textFieldNom.getText();
@@ -198,28 +223,22 @@ public class MainWindows {
 		panel.add(btnSupprimer);
 		
 		// Cr�er des produits
-		row[0] = "1";
-		row[1] = "Patate";
-		row[2] = "14";
-		row[3] = "Produit bio";
-		model.addRow(row);
+		try {
+			ResultSet Articles = JBDC.TableArticle();
+			while ( Articles.next()) {
+				row[0] = Articles.getInt("ID");
+				row[1] = Articles.getString("Nom");
+				row[2] = Articles.getInt("Qte");
+				row[3] = Articles.getString("Description");
+				model.addRow(row);
+				
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		row[0] = "2";
-		row[1] = "Salade";
-		row[2] = "3";
-		row[3] = "Produit frais";
-		model.addRow(row);
 		
-		row[0] = "3";
-		row[1] = "Poulet";
-		row[2] = "84";
-		row[3] = "Viande blanche";
-		model.addRow(row);
 		
-		row[0] = "4";
-		row[1] = "Livre";
-		row[2] = "89";
-		row[3] = "Roman SF";
-		model.addRow(row);
 	}
 }
